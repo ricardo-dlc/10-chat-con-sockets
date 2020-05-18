@@ -1,0 +1,51 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": ["eslint:recommended", "plugin:json/recommended", "plugin:prettier/recommended", "airbnb-base"],
+    // "root": true,
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": ["html", "json", "prettier"],
+    "rules": {
+        "prettier/prettier": "off",
+        "dot-location": ["error", "property"],
+        "indent": ["error", 4],
+        "semi": ["error", "always"],
+        "no-alert": "off",
+        "func-names": ["error", "never", { "generators": "always" }],
+        "no-console": "off",
+        "no-undef": "off",
+        "consistent-return": "off",
+        "camelcase": ["error", { "ignoreDestructuring": true }],
+        "no-shadow": "off",
+        "radix": ["error", "as-needed"],
+        "no-unused-vars": "warn",
+        "no-multiple-empty-lines": ["error", { "max": 1 }],
+        "comma-dangle": ["error", "never"],
+        "max-len": [
+            "error",
+            { "code": 120, "ignoreComments": true, "ignoreTrailingComments": true, "ignoreTemplateLiterals": true }
+        ],
+        "multiline-ternary": ["error", "always-multiline"],
+        "arrow-body-style": ["error", "as-needed"],
+        "no-underscore-dangle": "off",
+        "no-param-reassign": ["error", { "props": false }],
+        "no-plusplus": "off",
+        "no-use-before-define": ["error", { "functions": false }]
+    },
+    "settings": {
+        "html/report-bad-indent": "error",
+        // "html/indent": "0" // code should start at the beginning of the line (no initial indentation).
+        "html/indent": "+4" // indentation is the <script> indentation plus two spaces.
+        // "html/indent": "tab", // indentation is one tab at the beginning of the line.
+    }
+}
