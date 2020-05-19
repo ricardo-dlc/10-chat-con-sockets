@@ -22,10 +22,7 @@ io.on('connection', (client) => {
             .emit('usuariosConectados', usuarios.obtenerPersonasPorSala(personaBorrada.sala));
     });
 
-    client.emit('crearMensaje', {
-        usuario: 'Servidor',
-        mensaje: 'Bienvenido a esta aplicación'
-    });
+    client.emit('crearMensaje', crearMensaje('Servidor', 'Bienvenido a esta aplicación'));
 
     client.on('entrarChat', (data, callback) => {
         if (!data.nombre || !data.sala) {
@@ -39,17 +36,23 @@ io.on('connection', (client) => {
 
         usuarios.agregarPersona(client.id, data.nombre, data.sala);
 
+        client.broadcast
+            .to(data.sala)
+            .emit('crearMensaje', crearMensaje('Servidor', `${data.nombre} se unió`));
+
         client.broadcast.to(data.sala).emit('usuariosConectados', usuarios.obtenerPersonasPorSala(data.sala));
 
         callback(usuarios.obtenerPersonasPorSala(data.sala));
     });
 
     // Mensajes
-    client.on('crearMensaje', (data) => {
+    client.on('crearMensaje', (data, callback) => {
         const persona = usuarios.obtenerPersona(client.id);
         const mensaje = crearMensaje(persona.nombre, data.mensaje);
 
         client.broadcast.to(persona.sala).emit('crearMensaje', mensaje);
+
+        callback(mensaje);
     });
 
     // Mensajes privados

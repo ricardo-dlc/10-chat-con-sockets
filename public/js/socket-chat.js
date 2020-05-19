@@ -1,6 +1,6 @@
 const socket = io();
 
-const params = new URLSearchParams(window.location.search);
+// const params = new URLSearchParams(window.location.search);
 
 if (!params.has('nombre') || !params.has('sala')) {
     window.location = 'index.html';
@@ -17,13 +17,12 @@ socket.on('connect', () => {
     console.log('Conectado al servidor');
 
     socket.emit('entrarChat', usuario, (res) => {
-        console.log(res);
         if (res.error) {
             window.location = 'index.html';
             throw new Error('El nombre y la sala son necesarios');
         }
-
-        console.log('Usuarios conectados', res);
+        renderizarUsuarios(res);
+        // console.log('Usuarios conectados', res);
     });
 });
 
@@ -33,12 +32,15 @@ socket.on('disconnect', () => {
 
 // Escuchar info
 socket.on('crearMensaje', (mensaje) => {
-    console.log(mensaje);
+    // console.log(mensaje);
+    renderizarMensajes(mensaje);
+    scrollBottom();
 });
 
 // Escuchar eventos de des/conexión
 socket.on('usuariosConectados', (usuarios) => {
-    console.log(usuarios);
+    // console.log(usuarios);
+    renderizarUsuarios(usuarios);
 });
 
 // Mensajes privados

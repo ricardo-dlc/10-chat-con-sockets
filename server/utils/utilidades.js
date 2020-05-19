@@ -5,7 +5,7 @@ moment.locale('es');
 const crearMensaje = (nombre, mensaje) => ({
     nombre,
     mensaje,
-    fecha: moment().format('YYYY-MM-DD LTS')
+    fecha: moment().format('YYYY-MM-DD LT')
 });
 
 module.exports = {
